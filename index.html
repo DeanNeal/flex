@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	
+	<div class="container">
+		<div class="container-child">BLOCK 1</div>
+		<div class="container-child">BLOCK 2</div>
+		<div class="container-child">BLOCK 3</div>
+	</div>
+
+	<div id="app">
+		
+	</div>
+
+<!-- 	<template id="">
+		
+	</template> -->
+
+	<style>
+		.container {
+			display: flex;
+			flex-direction: row;
+		}
+		.container-child {
+			border: 1px solid;
+			padding: 20px;
+		}
+
+		.container-child:nth-child(1) {
+			/*order: 3;*/
+			flex: 1;
+		}
+		.container-child:nth-child(2) {
+			/*order: 2;*/
+			flex: 1;
+		}
+		.container-child:nth-child(3) {
+			/*order: 1;*/
+			flex: 1;
+		}
+	</style>
+
+	<script src="app.js"></script>
+</body>
+</html>
