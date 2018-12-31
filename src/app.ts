@@ -3,82 +3,36 @@
 // https://www.youtube.com/watch?v=8DrAj6NhCLg
 // https://www.youtube.com/watch?v=HjC613zdcA0&list=PLqHlAwsJRxAPs942EdJ1akeWpOg2yatiM&index=3
 
-	class vNode {
-		nodeName:  string;
-		parentName: string;
-		children: [];
-		content: string;
+import {Vue} from './core';
 
-		constructor(opts) {
-			this.nodeName = opts.nodeName;
-			this.parentName = opts.parentName;
-			this.children = opts.children;
-			this.content =  opts.content;
+Vue.component('app-counter', {
+	// name: 'app-counter',
+	template:  `<div class="counter">
+		<span v-click="test()">test</span>
+		<input type="text" v-value="value">
+	</div>`,
+	data: function() {
+		return {
+			value: 10
+		}
+	},
+	methods: {
+		test: function() {
+			this.value = this.value + 10;
 		}
 	}
+});
 
-	class Component {
-		template: string;
-		constructor(opts) {
-			// this.vDom = null;
-			this.template = opts.template;
-			this.name = opts.name;
-			this.render();
-		}
+var App = new Vue({
+    el: '#app',
+    // components: [],
+    template: `<div class="container">
+            <div class="container-child">BLOCK 1</div>
+            <div class="container-child">BLOCK 2</div>
+            <div class="container-child">BLOCK 3</div>
+        </div>
+        <app-counter></app-counter>`,
+    init() {
 
-		render() {
-			this.getVTree();
-			
-		}
-		getVTree() {
-			let a = document.createElement('div');
-			a.innerHTML = this.template;
-			// this.vDom = 
-			this.getNodeTree(a);
-			debugger
-		}
-
-		getNodeTree(node: any) {
-		    // if (node.hasChildNodes()) {
-		        var children = [];
-		        for (var j = 0; j < node.childNodes.length; j++) {
-		            children.push(this.getNodeTree(node.childNodes[j]));
-		        }
-		        console.log(node.nodeName.toLowerCase() === );
-		        return new vNode({
-		        	    nodeName: node.nodeName,
-		        	    parentName: node.parentNode ? node.parentNode.nodeName : null,
-		        	    children: children,
-		        	    content: node.innerText || "",
-		        });
-		    // }
-
-		    // return node;
-		}
-	}
-
-
-	var AppComponent = new Component({
-		name: 'app-counter',
-		template:  `<div>
-		    <app-counter></app-counter>
-			<span>test</span>
-			<input type="text">
-		</div>`
-	});
-
-	class Qwerty {
-		el: HTMLElement;
-	    constructor(options: any) {
-	        this.el = document.querySelector(options.el);
-	        options.init.call(this);
-	    }
-	}
-
-	var App = new Qwerty({
-	    el: '#app',
-	    components: [AppComponent],
-	    init() {
-
-	    }
-	})
+    }
+})

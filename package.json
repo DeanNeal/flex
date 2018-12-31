@@ -8,13 +8,14 @@
     "typescript": "^3.2.2"
   },
   "devDependencies": {
+    "rxjs": "^6.3.3",
     "webpack": "^4.28.3",
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.14"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack-dev-server --open --hot",
+    "dev": "webpack-dev-server --mode=development --open --hot",
     "build": "webpack --progress --hide-modules"
   },
   "repository": {
