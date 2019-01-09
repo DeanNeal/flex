@@ -1,4 +1,5 @@
 import {Core} from './core';
+import { Utils } from './utils';
 import { BehaviorSubject } from 'rxjs';
 
 export 	class Component {
@@ -44,6 +45,6 @@ export 	class Component {
 		temp.innerHTML = this.template;
 		let vDom: any = Core.getNodeTree(temp, this);		
 		vDom.parent = this.parent;
-		this.parent.parentNode.replaceChild(Core.unwrap(temp), this.parent);
+		this.parent.parentNode.replaceChild(Utils.unwrap(temp), this.parent);
 	}
 }

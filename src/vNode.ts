@@ -1,6 +1,7 @@
 import {Core} from './core';
+import { Utils } from './utils';
 import {Component} from './component';
-
+import {_value, _model, _class} from './directives';
 
 const events = ['click', 'mouseenter'];
 
@@ -35,11 +36,15 @@ export class vNode {
 	}
 
 	init() {
-
+		let vModel = this.attributes['v-model'];
+		if(vModel) {
+			this.node.removeAttribute('v-model');
+			_model.call(this, this.node, vModel);
+		}
 	}
 
 	render() {
-		if(Core.isCustomElement(this.node)) {
+		if(Utils.isCustomElement(this.node)) {
 			this.isComponent = true;
 			let compParams = Core.components[this.node.localName];
 			let comp = new Component(compParams, this.node);
@@ -67,12 +72,16 @@ export class vNode {
 	}
 
 	update(data) {
-		let val = this.attributes['v-value'];
-
-		if(val) {
-			var input = (<HTMLInputElement>this.node);
-			input.value = this.component.data.value[val];
+		let vVal = this.attributes['v-value'];
+		let vClass = this.attributes['v-class'];
+		if(vVal) {
+			// var input = (<HTMLInputElement>this.node);
 			this.node.removeAttribute('v-value');
+			_value.call(this, this.node, vVal);
+		}
+		if(vClass) {
+			this.node.removeAttribute('v-class');
+			_class.call(this, this.node, vClass);
 		}
 	}
 }

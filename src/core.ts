@@ -1,4 +1,5 @@
 import {vNode} from './vNode';
+import { Utils } from './utils';
 
 export class Core {
 	static components: {name: string, params: {}}[] = [];
@@ -32,27 +33,45 @@ export class Core {
 	    // return node;
 	}
 
-	static isCustomElement(element) {
-	    if (element.tagName.indexOf("-") !== -1) {
-	        return true;
-	    }
-	    let isAttribute = element.getAttribute("is");
-	    if (isAttribute === null) {
-	        return false;
-	    }
-	    return isAttribute.indexOf("-") !== -1;
-	}
+	// static getPropsByScope(value, scope, loopParams) {
+	//     let r;
+	//     let variable = value.split('.')
+	//     let listOfVariables = Core.getAllVariables();
+	//     let listOfVariablesValues = listOfVariables.map(r=> this.props.get(r));
+	    
+	//     if(loopParams && loopParams.iterator) { 
+	//         listOfVariables.push(loopParams.iterator);
+	//         listOfVariablesValues.push(scope);
 
-	static unwrap(wrapper) {
-		// place childNodes in document fragment
-		var docFrag = document.createDocumentFragment();
-		while (wrapper.firstChild) {
-			var child = wrapper.removeChild(wrapper.firstChild);
-			docFrag.appendChild(child);
-		}
+	//         if(loopParams.index || loopParams.index === 0) {
+	//             if(listOfVariables.indexOf('index') > -1) {
+	//                 listOfVariablesValues[listOfVariables.indexOf('index')] = loopParams.index;
+	//             } else {
+	//                 listOfVariables.push('index');
+	//                 listOfVariablesValues.push(loopParams.index);
+	//             }
+	//         } else {
+	//             listOfVariables.push('index'); // if index doesn't exist
+	//         }
+	//         if(loopParams.key) {                
+	//             listOfVariables.push('key');
+	//             listOfVariablesValues.push(loopParams.key);
+	//         }
+	//     }
 
-		return docFrag;
-	}
+	//     try {
+	//         r = new Function(listOfVariables, 'return ' + value).apply(this, listOfVariablesValues);
+	//     } catch(err) {
+	//         // throw new Error(err + '; ' + this);
+	//         // console.warn(err + '; ' + this);
+	//     }
+
+	//     return r;
+	// }
+
+	// static getAllVariables() {
+	//     return  Object.keys(this.props.getData());
+	// }
 }
 
 
@@ -69,12 +88,11 @@ export class Vue {
         temp.innerHTML = this.template;
 
         let vDom: any = Core.getNodeTree(temp, null);		
-        vDom.parent = this.el;//console.log(vDom);
-        this.el.appendChild(Core.unwrap(temp));
+        vDom.parent = this.el;console.log(vDom);
+        this.el.appendChild(Utils.unwrap(temp));
     }
 
-    static component(name: string, params: any) {
-    	params.name = name;
-    	Core.components[name] = params;//.push({name, params});
+    static component(params: any) {
+    	Core.components[params.name] = params;//.push({name, params});
     }
 }
